@@ -1,0 +1,13 @@
+{
+  "name": "donkey-fairy-tale-education",
+  "version": "1.0.0",
+  "description": "Donkey - 童话教育Web3平台",
+  "scripts": {
+    "dev": "serve",
+    "build": "mkdir -p public && cp -r index.html styles.css script.js assets public/",
+    "start": "serve public"
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+} 
