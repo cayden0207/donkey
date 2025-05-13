@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donkey - Fairy Tale Education for Children</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Enhanced Background Elements -->
+    <div class="fairy-tale-background">
+        <div class="bg-circle circle1"></div>
+        <div class="bg-circle circle2"></div>
+        <div class="bg-circle circle3"></div>
+        <div class="bg-dots"></div>
+    </div>
+
+    <div class="magic-stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+    </div>
+
+    <div class="parallax-elements">
+        <div class="parallax-star star1"></div>
+        <div class="parallax-star star2"></div>
+        <div class="parallax-star star3"></div>
+        <div class="parallax-cloud cloud1"></div>
+        <div class="parallax-cloud cloud2"></div>
+    </div>
+
+    <!-- Floating Objects -->
+    <div class="floating-objects">
+        <img src="assets/butterfly.png" alt="" class="floating-item butterfly1">
+        <img src="assets/butterfly.png" alt="" class="floating-item butterfly2">
+        <img src="assets/leaf.png" alt="" class="floating-item leaf1">
+        <img src="assets/leaf.png" alt="" class="floating-item leaf2">
+        <img src="assets/balloon.png" alt="" class="floating-item balloon1">
+    </div>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="assets/donkey-logo.png" alt="Donkey Logo">
+                <h1>DONKEY</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#interactive-experience">Experience</a></li>
+                <button class="connect-wallet">Connect Wallet</button>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="video-container">
+            <video autoplay loop muted playsinline class="hero-video">
+                <source src="assets/hero-section.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="video-loading">
+            <div class="loading-spinner"></div>
+            <p>Loading Fairy Tale World...</p>
+        </div>
+        <div class="container">
+            <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+                <h1 class="fairy-tale-title">Transforming Children's Education through <span class="highlight">Fairy Tales</span> and <span class="highlight">Web3</span></h1>
+                <p>Join us on a magical journey to bring real-world education to children through beautiful illustrations, comics, and interactive games.</p>
+                <div class="hero-buttons">
+                    <a href="#education" class="btn primary">Explore Education</a>
+                    <a href="#interactive-experience" class="btn secondary">See Experience</a>
+                </div>
+            </div>
+            <div class="floating-clouds">
+                <img src="assets/cloud1.png" alt="" class="cloud cloud1">
+                <img src="assets/cloud2.png" alt="" class="cloud cloud2">
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow-scroll-down">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="fairy-tale-heading">Our Story</h2>
+                <p>From a meme to a meaningful educational platform</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image" data-aos="fade-right" data-aos-delay="200">
+                    <div class="image-frame">
+                        <img src="assets/about-illustration.png" alt="Donkey's Journey">
+                    </div>
+                </div>
+                <div class="about-text" data-aos="fade-left" data-aos-delay="300">
+                    <p>$DONKEY began as a meme inspired by CZ, but we've evolved into something much more meaningful. Led by our dedicated CTO, we're actively developing applications that bring real value to everyday life.</p>
+                    <p>Our mission is to transform children's education through the power of storytelling and Web3 technology. We believe that beautiful illustrations, engaging comics, and interactive games can make learning fun and accessible to children worldwide.</p>
+                    <p>By combining the innovative aspects of blockchain with timeless fairy tales, we're creating a unique educational ecosystem that empowers the next generation.</p>
+                </div>
+            </div>
+        </div>
+        <img src="assets/fairy-dust.png" alt="" class="fairy-dust dust1">
+        <img src="assets/fairy-dust.png" alt="" class="fairy-dust dust2">
+        
+        <div class="floating-objects">
+            <img src="assets/butterfly.png" alt="" class="floating-item butterfly">
+            <img src="assets/leaf.png" alt="" class="floating-item leaf">
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+
+    <section id="education" class="education">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="fairy-tale-heading">Fairy Tale Education</h2>
+                <p>Learning through stories, illustrations, and play</p>
+            </div>
+            <div class="education-cards">
+                <div class="card" data-aos="flip-up" data-aos-delay="100">
+                    <div class="card-animated-bg"></div>
+                    <div class="card-image">
+                        <img src="assets/illustrations-icon.png" alt="Beautiful Illustrations">
+                    </div>
+                    <h3>Beautiful Illustrations</h3>
+                    <p>Captivating, fairy tale-inspired artwork that sparks imagination and curiosity in children of all ages.</p>
+                </div>
+                <div class="card" data-aos="flip-up" data-aos-delay="200">
+                    <div class="card-animated-bg"></div>
+                    <div class="card-image">
+                        <img src="assets/comics-icon.png" alt="Interactive Comics">
+                    </div>
+                    <h3>Interactive Comics</h3>
+                    <p>Engaging stories that teach valuable life lessons and educational concepts through colorful characters.</p>
+                </div>
+                <div class="card" data-aos="flip-up" data-aos-delay="300">
+                    <div class="card-animated-bg"></div>
+                    <div class="card-image">
+                        <img src="assets/games-icon.png" alt="Educational Games">
+                    </div>
+                    <h3>Educational Games</h3>
+                    <p>Fun and interactive games that reinforce learning while entertaining children in a safe digital environment.</p>
+                </div>
+            </div>
+            <div class="education-preview" data-aos="zoom-in" data-aos-delay="100">
+                <h3>Coming Soon: Donkey's Educational Platform</h3>
+                <div class="preview-image">
+                    <img src="assets/platform-preview.png" alt="Platform Preview">
+                </div>
+                <p>Our Web3-powered educational platform will allow children to explore fairy tales, earn rewards for learning, and collect unique digital items - all while learning valuable lessons.</p>
+                <a href="#roadmap" class="btn primary">See Our Roadmap</a>
+            </div>
+        </div>
+        <img src="assets/castle.png" alt="" class="castle-decoration">
+    </section>
+    
+    <div class="section-divider"></div>
+
+    <section id="roadmap" class="roadmap">
+        <div class="roadmap-bg-overlay"></div>
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="fairy-tale-heading">Our Roadmap</h2>
+                <p>The journey from meme to meaningful education</p>
+            </div>
+            
+            <div class="fairy-tale-roadmap" data-aos="fade-up">
+                <div class="storybook-path">
+                    <div class="path-decoration"></div>
+                    
+                    <div class="roadmap-milestone" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="milestone-icon">
+                            <img src="assets/castle.png" alt="Foundation" class="milestone-image">
+                            <span class="milestone-number">1</span>
+                        </div>
+                        <div class="milestone-content">
+                            <h3>Foundation</h3>
+                            <div class="milestone-details">
+                                <ul>
+                                    <li>Launch of $DONKEY token</li>
+                                    <li>Community building</li>
+                                    <li>Website development</li>
+                                    <li>Initial artistic direction</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-milestone" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="milestone-icon">
+                            <img src="assets/creation.png" alt="Creation" class="milestone-image">
+                            <span class="milestone-number">2</span>
+                        </div>
+                        <div class="milestone-content">
+                            <h3>Creation</h3>
+                            <div class="milestone-details">
+                                <ul>
+                                    <li>Development of first fairy tale illustrations</li>
+                                    <li>Creation of educational comics</li>
+                                    <li>Partnerships with children's education experts</li>
+                                    <li>Community expansion</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-milestone" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="milestone-icon">
+                            <img src="assets/innovation.png" alt="Innovation" class="milestone-image">
+                            <span class="milestone-number">3</span>
+                        </div>
+                        <div class="milestone-content">
+                            <h3>Innovation</h3>
+                            <div class="milestone-details">
+                                <ul>
+                                    <li>Launch of interactive learning platform</li>
+                                    <li>Release of first educational games</li>
+                                    <li>NFT integration for educational rewards</li>
+                                    <li>Expansion to multiple languages</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-milestone" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="milestone-icon">
+                            <img src="assets/growth.png" alt="Growth" class="milestone-image">
+                            <span class="milestone-number">4</span>
+                        </div>
+                        <div class="milestone-content">
+                            <h3>Growth</h3>
+                            <div class="milestone-details">
+                                <ul>
+                                    <li>Mobile application development</li>
+                                    <li>Expansion of educational content library</li>
+                                    <li>Partnerships with schools and educational institutions</li>
+                                    <li>Global outreach program</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="roadmap-cta" data-aos="fade-up" data-aos-delay="100">
+                <a href="#interactive-experience" class="btn primary">Join Our Journey</a>
+            </div>
+        </div>
+        <img src="assets/fairy-tale-book.png" alt="" class="book-decoration">
+        
+        <div class="floating-objects">
+            <img src="assets/balloon.png" alt="" class="floating-item balloon">
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+
+    <!-- Interactive Fairy Tale Experience -->
+    <section id="interactive-experience" class="interactive-experience">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="fairy-tale-heading">Interactive Fairy Tale Experience</h2>
+                <p>Coming Soon to Donkey Education Platform</p>
+            </div>
+            
+            <div class="coming-soon-preview" data-aos="zoom-in">
+                <div class="preview-image">
+                    <img src="assets/donkey-hero.png" alt="Interactive Story Preview" class="coming-soon-image">
+                </div>
+                <div class="coming-soon-features">
+                    <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-icon">
+                            <img src="assets/illustrations-icon.png" alt="Interactive Stories">
+                        </div>
+                        <h3>Interactive Stories</h3>
+                        <p>Engage with magical tales that respond to your choices and teach valuable lessons</p>
+                    </div>
+                    <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon">
+                            <img src="assets/games-icon.png" alt="Educational Games">
+                        </div>
+                        <h3>Educational Games</h3>
+                        <p>Play games designed to make learning fun while developing essential skills</p>
+                    </div>
+                    <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-icon">
+                            <img src="assets/comics-icon.png" alt="Digital Rewards">
+                        </div>
+                        <h3>Digital Rewards</h3>
+                        <p>Earn unique digital collectibles as you progress through educational content</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="experience-cta" data-aos="fade-up">
+                <p>Our interactive fairy tale platform is currently in development. Stay tuned for a magical educational experience that will transform how children learn!</p>
+                <a href="#education" class="btn primary">Learn More About Our Project</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="fairy-tale-footer"></div>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2025 DONKEY. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="notification-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
