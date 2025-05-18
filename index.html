@@ -533,6 +533,43 @@
     
     // 窗口大小改变时执行
     window.addEventListener('resize', toggleSocialButtons);
+    
+    // 复制合约地址功能
+    document.addEventListener('DOMContentLoaded', function() {
+        const contractAddressWrapper = document.querySelector('.contract-address-wrapper');
+        const contractInput = document.getElementById('contract-address');
+        
+        if (contractAddressWrapper && contractInput) {
+            contractAddressWrapper.addEventListener('click', function() {
+                // 选择文本
+                contractInput.select();
+                contractInput.setSelectionRange(0, 99999);
+                
+                // 复制到剪贴板
+                navigator.clipboard.writeText(contractInput.value)
+                    .then(() => {
+                        // 显示成功提示
+                        const notification = document.createElement('div');
+                        notification.className = 'notification success show';
+                        notification.textContent = '合约地址已复制!';
+                        
+                        const notificationContainer = document.querySelector('.notification-container');
+                        if (notificationContainer) {
+                            notificationContainer.appendChild(notification);
+                            
+                            // 2秒后移除提示
+                            setTimeout(() => {
+                                notification.classList.remove('show');
+                                setTimeout(() => {
+                                    notificationContainer.removeChild(notification);
+                                }, 300);
+                            }, 2000);
+                        }
+                    })
+                    .catch(err => console.error('复制失败: ', err));
+            });
+        }
+    });
     </script>
 </body>
 </html> 
