@@ -9,8 +9,143 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <style>
+        /* 全页面加载动画 */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fffaf0 0%, #f8f8ff 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.84s ease-out;
+        }
+        
+        .page-loader .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid rgba(243, 186, 47, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--bnb-yellow);
+            animation: spin 1.2s ease-in-out infinite;
+            margin-bottom: 25px;
+            box-shadow: 0 0 25px rgba(243, 186, 47, 0.4);
+            position: relative;
+        }
+        
+        .page-loader .loading-spinner::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border-radius: 50%;
+            border: 3px dashed rgba(243, 186, 47, 0.3);
+            animation: spin 2.4s linear infinite reverse;
+        }
+        
+        .page-loader .loading-spinner::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background-color: var(--bnb-yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--bnb-yellow), 0 0 30px var(--bnb-yellow);
+        }
+        
+        .page-loader p {
+            font-family: 'Bubblegum Sans', cursive;
+            color: var(--bnb-yellow);
+            font-size: 26px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin-top: 15px;
+            animation: float 1.8s ease-in-out infinite;
+        }
+        
+        .page-loader p::before,
+        .page-loader p::after {
+            content: '✨';
+            position: absolute;
+            top: 0;
+            font-size: 20px;
+            animation: twinkle 1.2s ease-in-out infinite alternate;
+        }
+        
+        .page-loader p::before {
+            left: -35px;
+            animation-delay: 0.2s;
+        }
+        
+        .page-loader p::after {
+            right: -35px;
+            animation-delay: 0.5s;
+        }
+        
+        body.loaded .page-loader {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- 全页面加载动画 -->
+    <div class="page-loader">
+        <div class="loading-spinner"></div>
+        <p>Welcome to Donkey's Fairy Tale World...</p>
+    </div>
+
+    <!-- 顶部社区链接 -->
+    <div style="position: fixed; top: 50%; right: 30px; z-index: 10000; display: flex; flex-direction: column; gap: 20px; transform: translateY(-50%);">
+        <button onclick="window.open('https://x.com/donkey_bsc_meme?s=21', '_blank')" 
+                style="width: 60px; height: 60px; border-radius: 50%; background-color: #000; color: white; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden; transition: all 0.3s ease;">
+            <img src="assets/X logo.png" alt="X" style="width: 50%; height: auto;">
+        </button>
+        <button onclick="window.open('https://t.me/donkey_bsc_cto', '_blank')" 
+                style="width: 60px; height: 60px; border-radius: 50%; background-color: #0088cc; color: white; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden; transition: all 0.3s ease;">
+            <img src="assets/telegram.png" alt="Telegram" style="width: 50%; height: auto;">
+        </button>
+        <button onclick="window.open('https://dexscreener.com/bsc/0x58495Ea0271d957632415B5494966899A1FA0BE3', '_blank')" 
+                style="width: 60px; height: 60px; border-radius: 50%; background-color: #222; color: white; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden; transition: all 0.3s ease;">
+            <img src="assets/dexscreener-logo.png" alt="Dexscreener" style="width: 70%; height: auto;">
+        </button>
+        <button onclick="window.open('https://four.meme/token/0xa49fa5e8106e2d6d6a69e78df9b6a20aab9c4444', '_blank')" 
+                style="width: 60px; height: 60px; border-radius: 50%; background-color: #000; color: white; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden; transition: all 0.3s ease;">
+            <img src="assets/fourmeme.jpg" alt="Four.meme" style="width: 70%; height: auto;">
+        </button>
+    </div>
+
+    <!-- 手机模式的社区链接按钮 -->
+    <div id="mobile-social-buttons" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10000; flex-direction: row; gap: 15px; padding: 15px; background: rgba(0,0,0,0.7); border-radius: 50px;">
+        <button onclick="window.open('https://x.com/donkey_bsc_meme?s=21', '_blank')" 
+                style="width: 45px; height: 45px; border-radius: 50%; background-color: #000; color: white; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden; transition: all 0.3s ease;">
+            <img src="assets/X logo.png" alt="X" style="width: 50%; height: auto;">
+        </button>
+        <button onclick="window.open('https://t.me/donkey_bsc_cto', '_blank')" 
+                style="width: 45px; height: 45px; border-radius: 50%; background-color: #0088cc; color: white; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden; transition: all 0.3s ease;">
+            <img src="assets/telegram.png" alt="Telegram" style="width: 50%; height: auto;">
+        </button>
+        <button onclick="window.open('https://dexscreener.com/bsc/0x58495Ea0271d957632415B5494966899A1FA0BE3', '_blank')" 
+                style="width: 45px; height: 45px; border-radius: 50%; background-color: #222; color: white; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden; transition: all 0.3s ease;">
+            <img src="assets/dexscreener-logo.png" alt="Dexscreener" style="width: 70%; height: auto;">
+        </button>
+        <button onclick="window.open('https://four.meme/token/0xa49fa5e8106e2d6d6a69e78df9b6a20aab9c4444', '_blank')" 
+                style="width: 45px; height: 45px; border-radius: 50%; background-color: #000; color: white; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; padding: 0; overflow: hidden; transition: all 0.3s ease;">
+            <img src="assets/fourmeme.jpg" alt="Four.meme" style="width: 70%; height: auto;">
+        </button>
+    </div>
+
     <!-- Enhanced Background Elements -->
     <div class="fairy-tale-background">
         <div class="bg-circle circle1"></div>
@@ -77,17 +212,17 @@
             </video>
             <div class="video-overlay"></div>
         </div>
-        <div class="video-loading">
-            <div class="loading-spinner"></div>
-            <p>Loading Fairy Tale World...</p>
-        </div>
         <div class="container">
             <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
                 <h1 class="fairy-tale-title">Transforming Children's Education through <span class="highlight">Fairy Tales</span> and <span class="highlight">Web3</span></h1>
                 <p>Join us on a magical journey to bring real-world education to children through beautiful illustrations, comics, and interactive games.</p>
-                <div class="hero-buttons">
-                    <a href="#education" class="btn primary">Explore Education</a>
-                    <a href="#interactive-experience" class="btn secondary">See Experience</a>
+                
+                <!-- Contract Address with Copy Function -->
+                <div class="contract-address-container">
+                    <span class="contract-label">Contract Address:</span>
+                    <div class="contract-address-wrapper">
+                        <input type="text" class="contract-address-input" id="contract-address" value="0xA49fA5E8106E2d6d6a69E78df9B6A20AaB9c4444" readonly size="42">
+                    </div>
                 </div>
             </div>
             <div class="floating-clouds">
@@ -341,5 +476,63 @@
     <div class="notification-container"></div>
 
     <script src="script.js"></script>
+    <script>
+    // 页面加载完成后移除加载动画
+    window.addEventListener('load', function() {
+        // 给加载动画一个短暂的额外延迟，确保页面内容已准备好
+        setTimeout(function() {
+            document.body.classList.add('loaded');
+        }, 960); // 从800ms延长到960ms (增加20%)
+    });
+
+    // 社区按钮悬停效果
+    document.querySelectorAll('button[onclick]').forEach(button => {
+        button.addEventListener('mouseover', function() {
+            this.style.transform = 'translateY(-5px) scale(1.05)';
+            this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.5)';
+        });
+        
+        button.addEventListener('mouseout', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.4)';
+        });
+    });
+
+    // 响应式设计 - 根据屏幕宽度切换社交按钮
+    function toggleSocialButtons() {
+        const desktopButtons = document.querySelector('.social-buttons, [style*="position: fixed; top: 50%"]');
+        const mobileButtons = document.getElementById('mobile-social-buttons');
+        
+        if (window.innerWidth <= 768) {
+            // 手机视图
+            if (desktopButtons) desktopButtons.style.display = 'none';
+            if (mobileButtons) {
+                mobileButtons.style.display = 'flex';
+                // 确保悬停效果应用到移动版按钮
+                document.querySelectorAll('#mobile-social-buttons button').forEach(button => {
+                    button.addEventListener('mouseover', function() {
+                        this.style.transform = 'scale(1.1)';
+                        this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.5)';
+                    });
+                    
+                    button.addEventListener('mouseout', function() {
+                        this.style.transform = 'scale(1)';
+                        this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.4)';
+                    });
+                });
+            }
+        } else {
+            // 桌面视图
+            if (desktopButtons) desktopButtons.style.display = 'flex';
+            if (mobileButtons) mobileButtons.style.display = 'none';
+        }
+    }
+
+    // 页面加载时执行
+    toggleSocialButtons();
+    
+    // 窗口大小改变时执行
+    window.addEventListener('resize', toggleSocialButtons);
+    </script>
 </body>
 </html> 
