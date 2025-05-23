@@ -1,13 +1,37 @@
 {
-  "name": "donkey-fairy-tale-education",
+  "name": "donkey-cz-telegram-bot",
   "version": "1.0.0",
-  "description": "Donkey - 童话教育Web3平台",
+  "description": "Donkey CZ - 一只碎嘴但充满正能量的驴子AI代理",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "serve",
-    "build": "mkdir -p public && cp -r index.html styles.css script.js assets public/",
-    "start": "serve public"
+    "start": "node --loader ts-node/esm src/index.ts",
+    "dev": "nodemon --loader ts-node/esm src/index.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "serve": "^14.2.1"
-  }
+    "@elizaos/core": "^0.25.6-alpha.1",
+    "@elizaos/plugin-bootstrap": "^0.25.6-alpha.1",
+    "@elizaos/client-telegram": "^0.25.6-alpha.1",
+    "dotenv": "^16.3.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "telegram",
+    "elizaos",
+    "donkey"
+  ],
+  "author": "Donkey Team",
+  "license": "MIT"
 } 
