@@ -3,8 +3,6 @@ import { exec } from 'child_process';
 import { join, dirname } from 'path';
 import { existsSync } from 'fs';
 import { fileURLToPath } from 'url';
-import http from 'http';
-import { readFileSync, writeFileSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -174,20 +172,4 @@ function tryFallback() {
 }
 
 // 启动机器人
-startBot();
-
-// 添加基本的健康检查服务器
-const server = http.createServer((req, res) => {
-    if (req.url === '/health') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ status: 'healthy', service: 'donkey-cz-bot' }));
-    } else {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('Donkey CZ Bot is running! 🐴');
-    }
-});
-
-const port = process.env.PORT || 3000;
-server.listen(port, () => {
-    console.log(`🚀 Health check server running on port ${port}`);
-}); 
+startBot(); 

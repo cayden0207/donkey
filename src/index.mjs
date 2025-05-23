@@ -5,12 +5,41 @@ import * as path from "path";
 import * as dotenv from "dotenv";
 import * as http from "http";
 import * as url from "url";
+import * as net from "net";
 
 // 加载环境变量
 dotenv.config();
 
 let globalRuntime = null;
 let telegramClient = null;
+
+// 检查端口是否可用
+function checkPort(port) {
+  return new Promise((resolve) => {
+    const server = net.createServer();
+    server.listen(port, () => {
+      server.once('close', () => {
+        resolve(true);
+      });
+      server.close();
+    });
+    server.on('error', () => {
+      resolve(false);
+    });
+  });
+}
+
+// 查找可用端口
+async function findAvailablePort(startPort = 3000) {
+  let port = startPort;
+  while (port < startPort + 100) {
+    if (await checkPort(port)) {
+      return port;
+    }
+    port++;
+  }
+  throw new Error('No available port found');
+}
 
 async function initializeTelegramBot() {
   if (!globalRuntime) {
@@ -101,6 +130,12 @@ async function startDonkeyCZBot() {
     elizaLogger.log("🐴 ✅ Donkey CZ AgentRuntime initialized successfully!");
     elizaLogger.log("🐴 🎯 Core AI system is ready!");
     
+    // 查找可用端口
+    const requestedPort = parseInt(process.env.PORT) || 3000;
+    const availablePort = await findAvailablePort(requestedPort);
+    
+    elizaLogger.log(`🐴 🔍 Requested port: ${requestedPort}, Available port: ${availablePort}`);
+    
     // 创建HTTP服务器用于手动触发Telegram初始化
     const server = http.createServer(async (req, res) => {
       const parsedUrl = url.parse(req.url, true);
@@ -126,6 +161,7 @@ async function startDonkeyCZBot() {
           runtime: globalRuntime ? 'initialized' : 'not initialized',
           telegram: telegramClient ? 'connected' : 'not connected',
           character: characterData.name,
+          port: availablePort,
           timestamp: new Date().toISOString()
         }));
       } else if (parsedUrl.pathname === '/') {
@@ -139,6 +175,7 @@ async function startDonkeyCZBot() {
             <p><strong>Character:</strong> ${characterData.name}</p>
             <p><strong>Runtime:</strong> ${globalRuntime ? '✅ Initialized' : '❌ Not initialized'}</p>
             <p><strong>Telegram:</strong> ${telegramClient ? '✅ Connected' : '⚠️ Not connected'}</p>
+            <p><strong>Port:</strong> ${availablePort}</p>
             <hr>
             <button onclick="initBot()" style="padding: 10px 20px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
               🚀 Initialize Telegram Bot
@@ -193,11 +230,10 @@ async function startDonkeyCZBot() {
       }
     });
 
-    const port = process.env.PORT || 3000;
-    server.listen(port, () => {
-      elizaLogger.log(`🐴 🌐 HTTP server running on port ${port}`);
-      elizaLogger.log(`🐴 🎛️ Control panel: http://localhost:${port}`);
-      elizaLogger.log(`🐴 🤖 Telegram init endpoint: http://localhost:${port}/api/telegram-bot`);
+    server.listen(availablePort, () => {
+      elizaLogger.log(`🐴 🌐 HTTP server running on port ${availablePort}`);
+      elizaLogger.log(`🐴 🎛️ Control panel: http://localhost:${availablePort}`);
+      elizaLogger.log(`🐴 🤖 Telegram init endpoint: http://localhost:${availablePort}/api/telegram-bot`);
     });
 
     elizaLogger.log(`🐴 📝 Character: ${characterData.name}`);
