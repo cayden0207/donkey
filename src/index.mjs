@@ -48,38 +48,136 @@ async function initializeTelegramBot() {
 
   try {
     elizaLogger.log("🐴 🔌 Initializing Telegram bot...");
+    elizaLogger.log("🐴 🔍 Debugging module import...");
     
-    // 尝试动态导入Telegram客户端
-    const telegramModule = await import("@elizaos/client-telegram");
-    elizaLogger.log("🐴 📦 Telegram module loaded:", Object.keys(telegramModule));
-    
-    // 尝试不同的导出名称
-    const TelegramClient = telegramModule.default || 
-                          telegramModule.TelegramClientInterface || 
-                          telegramModule.TelegramClient ||
-                          telegramModule;
-    
-    elizaLogger.log("🐴 🔧 Creating Telegram client with:", typeof TelegramClient);
-    
-    if (typeof TelegramClient === 'function') {
-      telegramClient = new TelegramClient(globalRuntime, process.env.TELEGRAM_BOT_TOKEN);
+    // 添加详细的模块检查
+    try {
+      elizaLogger.log("🐴 📋 Checking @elizaos/client-telegram availability...");
       
-      if (telegramClient.start) {
-        await telegramClient.start();
-        elizaLogger.log("🐴 ✅ Telegram client started successfully!");
-        return { success: true, message: "Telegram bot initialized successfully!" };
-      } else {
-        elizaLogger.log("🐴 ⚠️ Telegram client created but no start method found");
-        return { success: true, message: "Telegram client created (no start method)" };
+      // 尝试动态导入Telegram客户端
+      const telegramModule = await import("@elizaos/client-telegram");
+      elizaLogger.log("🐴 📦 Telegram module loaded successfully!");
+      elizaLogger.log("🐴 🔍 Available exports:", Object.keys(telegramModule));
+      elizaLogger.log("🐴 🔍 Module type:", typeof telegramModule);
+      elizaLogger.log("🐴 🔍 Default export:", typeof telegramModule.default);
+      
+      // 尝试不同的导出名称
+      const possibleClients = [
+        telegramModule.default,
+        telegramModule.TelegramClientInterface,
+        telegramModule.TelegramClient,
+        telegramModule.Client,
+        telegramModule
+      ];
+      
+      elizaLogger.log("🐴 🔍 Possible client types:", possibleClients.map(c => typeof c));
+      
+      let TelegramClient = null;
+      for (let i = 0; i < possibleClients.length; i++) {
+        if (typeof possibleClients[i] === 'function') {
+          TelegramClient = possibleClients[i];
+          elizaLogger.log(`🐴 ✅ Found constructor at index ${i}`);
+          break;
+        }
       }
-    } else {
-      elizaLogger.error("🐴 ❌ TelegramClient is not a constructor function");
-      return { success: false, message: "TelegramClient is not constructible" };
+      
+      if (!TelegramClient) {
+        return { 
+          success: false, 
+          message: "No valid Telegram client constructor found in module",
+          debug: {
+            exports: Object.keys(telegramModule),
+            types: possibleClients.map(c => typeof c)
+          }
+        };
+      }
+      
+      elizaLogger.log("🐴 🔧 Creating Telegram client with constructor:", TelegramClient.name || "Anonymous");
+      
+      // 尝试创建客户端实例
+      try {
+        telegramClient = new TelegramClient(globalRuntime, process.env.TELEGRAM_BOT_TOKEN);
+        elizaLogger.log("🐴 ✅ Telegram client instance created successfully!");
+        
+        if (telegramClient.start && typeof telegramClient.start === 'function') {
+          elizaLogger.log("🐴 🚀 Starting Telegram client...");
+          await telegramClient.start();
+          elizaLogger.log("🐴 ✅ Telegram client started successfully!");
+          return { success: true, message: "Telegram bot initialized and started successfully!" };
+        } else {
+          elizaLogger.log("🐴 ⚠️ Telegram client created but no start method found");
+          elizaLogger.log("🐴 🔍 Available methods:", Object.getOwnPropertyNames(telegramClient));
+          return { 
+            success: true, 
+            message: "Telegram client created (no start method)",
+            debug: {
+              methods: Object.getOwnPropertyNames(telegramClient),
+              hasStart: 'start' in telegramClient,
+              startType: typeof telegramClient.start
+            }
+          };
+        }
+      } catch (constructorError) {
+        elizaLogger.error("🐴 ❌ Error creating Telegram client instance:", constructorError);
+        return { 
+          success: false, 
+          message: `Failed to create Telegram client: ${constructorError.message}`,
+          debug: {
+            error: constructorError.name,
+            message: constructorError.message,
+            stack: constructorError.stack
+          }
+        };
+      }
+      
+    } catch (importError) {
+      elizaLogger.error("🐴 ❌ Failed to import @elizaos/client-telegram:", importError);
+      
+      // 检查是否是模块路径问题
+      if (importError.code === 'ERR_MODULE_NOT_FOUND') {
+        elizaLogger.log("🐴 🔍 Checking if module is installed...");
+        
+        try {
+          // 尝试require方式（如果是CommonJS模块）
+          const { createRequire } = await import('module');
+          const require = createRequire(import.meta.url);
+          const telegramModuleReq = require("@elizaos/client-telegram");
+          elizaLogger.log("🐴 📦 Module found via require, exports:", Object.keys(telegramModuleReq));
+          
+          return { 
+            success: false, 
+            message: "Module found via require but not import - possible ESM/CJS compatibility issue",
+            debug: {
+              requireExports: Object.keys(telegramModuleReq)
+            }
+          };
+        } catch (requireError) {
+          elizaLogger.error("🐴 ❌ Module not found via require either:", requireError);
+        }
+      }
+      
+      return { 
+        success: false, 
+        message: `Module import failed: ${importError.message}`,
+        debug: {
+          error: importError.name,
+          code: importError.code,
+          message: importError.message
+        }
+      };
     }
     
   } catch (error) {
     elizaLogger.error("🐴 ❌ Telegram initialization failed:", error);
-    return { success: false, message: error.message || String(error) };
+    return { 
+      success: false, 
+      message: error.message || String(error),
+      debug: {
+        error: error.name,
+        message: error.message,
+        stack: error.stack
+      }
+    };
   }
 }
 
