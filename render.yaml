@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: donkey-cz-bot
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: OPENAI_API_KEY
+        value: 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
+      - key: TELEGRAM_BOT_TOKEN  
+        value: 7738321110:AAEBvNa7w6_MZmhZaqLgucnq55SFmP98ssw
+      - key: MODEL_PROVIDER
+        value: openai
+      - key: SMALL_MODEL
+        value: gpt-4o-mini
+      - key: LARGE_MODEL
+        value: gpt-4o-mini
+      - key: CHARACTER_PATH
+        value: ./donkey-cz-character.json
+      - key: PORT
+        value: 10000 
