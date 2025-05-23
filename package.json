@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node replit-start.js",
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon",
     "build": "tsc",
     "direct": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
