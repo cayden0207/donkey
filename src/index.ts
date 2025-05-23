@@ -47,11 +47,18 @@ async function startDonkeyCZBot() {
       character: characterData,
     });
 
-    // 创建 Telegram 客户端 - 暂时注释掉以解决类型问题
+    // 创建 Telegram 客户端 - 暂时注释，等待确认正确的初始化方式
     // const telegramClient = new TelegramClient(runtime, process.env.TELEGRAM_BOT_TOKEN!);
 
-    // elizaLogger.log("🐴 Donkey CZ is now online and ready to chat!");
-    // elizaLogger.log(`🐴 Telegram Bot Username: @${characterData.username || 'donkeycz_bot'}`);
+    elizaLogger.log("🐴 Donkey CZ AgentRuntime initialized successfully!");
+    elizaLogger.log("🐴 Now attempting to initialize Telegram client...");
+    
+    // TODO: 正确初始化Telegram客户端
+    elizaLogger.log("⚠️ Telegram client initialization temporarily disabled");
+    elizaLogger.log("🐴 Bot core is running, but Telegram integration pending");
+
+    elizaLogger.log("🐴 Donkey CZ is now online and ready to chat!");
+    elizaLogger.log(`🐴 Telegram Bot Username: @${characterData.username || 'donkeycz_bot'}`);
     
     // 保持进程运行
     process.on('SIGINT', () => {
