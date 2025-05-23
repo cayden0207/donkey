@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node replit-start.js",
-    "dev": "nodemon",
+    "dev": "node --loader ts-node/esm src/index.ts",
     "build": "tsc",
     "direct": "node index.js",
+    "ts-direct": "node --loader ts-node/esm --experimental-specifier-resolution=node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
