@@ -1,6 +1,5 @@
 import { AgentRuntime, elizaLogger } from "@elizaos/core";
 import { bootstrapPlugin } from "@elizaos/plugin-bootstrap";
-import TelegramClientInterface from "@elizaos/client-telegram";
 import * as fs from "fs";
 import * as path from "path";
 import * as dotenv from "dotenv";
@@ -55,24 +54,34 @@ async function startDonkeyCZBot() {
     elizaLogger.log("🐴 ✅ Donkey CZ AgentRuntime initialized successfully!");
     elizaLogger.log("🐴 🎯 Core AI system is ready!");
     
-    // 尝试标准的Telegram客户端初始化
-    elizaLogger.log("🐴 🔌 Connecting to Telegram bot @donkeycz_bot...");
+    // 初始化Telegram客户端
+    elizaLogger.log("🐴 🔌 Connecting to Telegram...");
     elizaLogger.log("🐴 🔑 Telegram Bot Token configured:", process.env.TELEGRAM_BOT_TOKEN ? "✅ Yes" : "❌ No");
     
     try {
-      // TODO: 正确的Telegram客户端初始化方式仍需研究
-      // const telegramClient = new TelegramClientInterface(runtime, process.env.TELEGRAM_BOT_TOKEN!);
+      // 尝试动态导入Telegram客户端
+      const { TelegramClientInterface } = await import("@elizaos/client-telegram");
       
-      elizaLogger.log("🐴 ⚠️ Telegram client initialization temporarily skipped");
-      elizaLogger.log("🐴 💡 Reason: Need to resolve TelegramClient constructor issue");
+      // 创建Telegram客户端实例
+      const telegramClient = new TelegramClientInterface(runtime, process.env.TELEGRAM_BOT_TOKEN!);
+      
+      // 启动Telegram客户端
+      await telegramClient.start();
+      
+      elizaLogger.log("🐴 ✅ Telegram client connected successfully!");
+      elizaLogger.log("🐴 🎉 Donkey CZ is now online and ready to chat!");
       
     } catch (telegramError) {
       elizaLogger.error("🐴 ❌ Telegram connection failed:", telegramError);
+      elizaLogger.error("🐴 💡 Attempting to run without Telegram for debugging...");
+      
+      // 降级到核心功能，不连接Telegram
+      elizaLogger.log("🐴 🔄 Running in core AI mode only");
     }
     
     elizaLogger.log(`🐴 📝 Character: ${characterData.name}`);
     elizaLogger.log(`🐴 🤖 Bot Username: @${characterData.username || 'donkeycz_bot'}`);
-    elizaLogger.log("🐴 ⭐ Status: Core AI ready, Telegram integration pending");
+    elizaLogger.log("🐴 ⭐ Status: Core system operational!");
     
     // 保持进程运行
     process.on('SIGINT', () => {
@@ -81,8 +90,8 @@ async function startDonkeyCZBot() {
     });
 
     // 保持进程活跃
-    elizaLogger.log("🐴 🚀 Bot is running... Ready to chat with 主人们!");
-    elizaLogger.log("🐴 💭 Next step: Fix Telegram client connection");
+    elizaLogger.log("🐴 🚀 Bot core is running...");
+    elizaLogger.log("🐴 💭 Check logs for Telegram connection status");
 
   } catch (error) {
     elizaLogger.error("🐴 Failed to start Donkey CZ Bot:", error);
