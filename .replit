@@ -1,0 +1,25 @@
+modules = ["nodejs-18"]
+
+[nix]
+channel = "stable-22_11"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[languages.javascript]
+pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
+syntax = "javascript"
+
+[languages.typescript]
+pattern = "**/{*.ts,*.tsx}"
+syntax = "typescript"
+
+[deployment]
+run = "npm start"
+deploymentTarget = "cloudrun"
+
+[env]
+REPL_ID = "$REPL_ID"
+REPL_SLUG = "$REPL_SLUG"
+REPL_OWNER = "$REPL_OWNER" 

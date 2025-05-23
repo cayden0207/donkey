@@ -4,9 +4,10 @@
   "description": "Donkey CZ - 一只碎嘴但充满正能量的驴子AI代理",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node replit-start.js",
     "dev": "nodemon --loader ts-node/esm src/index.ts",
     "build": "tsc",
+    "direct": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -29,7 +30,8 @@
     "chatbot",
     "telegram",
     "elizaos",
-    "donkey"
+    "donkey",
+    "replit"
   ],
   "author": "Donkey Team",
   "license": "MIT"
