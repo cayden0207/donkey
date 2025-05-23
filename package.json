@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Donkey CZ - 一只碎嘴但充满正能量的驴子AI代理",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node replit-start.js",
     "dev": "nodemon",

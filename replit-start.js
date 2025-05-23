@@ -1,6 +1,6 @@
-// Replit专用启动文件
-const http = require('http');
-const { spawn } = require('child_process');
+// Replit专用启动文件 - ESM版本
+import http from 'http';
+import { spawn } from 'child_process';
 
 console.log('🐴 Donkey CZ Bot starting on Replit...');
 console.log('Node.js version:', process.version);
