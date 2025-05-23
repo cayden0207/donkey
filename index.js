@@ -1,6 +1,7 @@
 // 简化版的Donkey CZ启动文件
 const { exec } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 
 console.log('🐴 Starting Donkey CZ Bot...');
 console.log('Node.js version:', process.version);
@@ -17,29 +18,91 @@ for (const env of requiredEnvs) {
 
 console.log('✅ Environment variables check passed');
 
-// 尝试运行TypeScript版本
-const tsFile = path.join(__dirname, 'src', 'index.ts');
-const jsFile = path.join(__dirname, 'dist', 'index.js');
-
-// 首先尝试构建
-exec('npm run build', (error, stdout, stderr) => {
-    if (error) {
-        console.log('Build failed, trying to run TypeScript directly...');
-        // 如果构建失败，尝试直接运行ts-node
-        exec('npx ts-node --loader ts-node/esm src/index.ts', (error, stdout, stderr) => {
+// 启动机器人的函数
+function startBot() {
+    const jsFile = path.join(__dirname, 'dist', 'index.js');
+    const tsFile = path.join(__dirname, 'src', 'index.ts');
+    
+    // 首先检查是否有构建好的JS文件
+    if (fs.existsSync(jsFile)) {
+        console.log('📁 Found compiled JS file, starting bot...');
+        try {
+            require(jsFile);
+        } catch (error) {
+            console.error('❌ Error running compiled bot:', error);
+            tryTypeScriptDirect();
+        }
+    } else {
+        // 尝试构建
+        console.log('🔨 Building TypeScript...');
+        exec('npm run build', (error, stdout, stderr) => {
             if (error) {
-                console.error('❌ Failed to start bot:', error);
-                process.exit(1);
+                console.log('Build failed, trying TypeScript directly...');
+                tryTypeScriptDirect();
+            } else {
+                console.log('✅ Build successful, starting bot...');
+                try {
+                    require(jsFile);
+                } catch (error) {
+                    console.error('❌ Error running compiled bot:', error);
+                    tryTypeScriptDirect();
+                }
             }
+        });
+    }
+}
+
+// 尝试直接运行TypeScript
+function tryTypeScriptDirect() {
+    console.log('🔄 Trying to run TypeScript directly...');
+    
+    // 尝试简单的ts-node命令（不使用--loader选项）
+    exec('npx ts-node src/index.ts', (error, stdout, stderr) => {
+        if (error) {
+            console.error('❌ ts-node failed, trying alternative approach:', error.message);
+            // 最后的备用方案
+            tryFallback();
+        } else {
+            console.log('✅ TypeScript started successfully');
             console.log(stdout);
             if (stderr) console.error(stderr);
-        });
-    } else {
-        console.log('Build successful, starting bot...');
-        // 构建成功，运行编译后的JS
-        require(jsFile);
-    }
-});
+        }
+    });
+}
+
+// 备用方案：创建一个简单的JS包装器
+function tryFallback() {
+    console.log('🆘 Using fallback approach...');
+    
+    // 检查是否已安装依赖
+    exec('npm list @elizaos/core', (error, stdout, stderr) => {
+        if (error) {
+            console.log('📦 Installing dependencies...');
+            exec('npm install', (error, stdout, stderr) => {
+                if (error) {
+                    console.error('❌ Failed to install dependencies:', error);
+                    process.exit(1);
+                }
+                console.log('✅ Dependencies installed');
+                startBot();
+            });
+        } else {
+            console.log('✅ Dependencies already installed');
+            // 使用require钩子加载TypeScript
+            try {
+                require('ts-node/register');
+                require('./src/index.ts');
+            } catch (error) {
+                console.error('❌ Final fallback failed:', error);
+                console.error('请检查您的TypeScript配置和依赖安装');
+                process.exit(1);
+            }
+        }
+    });
+}
+
+// 启动机器人
+startBot();
 
 // 添加基本的健康检查服务器
 const http = require('http');

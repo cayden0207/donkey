@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
+    "target": "ES2020",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -9,10 +9,11 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "declaration": true,
+    "declaration": false,
     "outDir": "./dist",
     "rootDir": "./src",
-    "types": ["node"]
+    "types": ["node"],
+    "sourceMap": true
   },
   "include": [
     "src/**/*"
@@ -22,6 +23,9 @@
     "dist"
   ],
   "ts-node": {
-    "esm": true
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
   }
 } 
